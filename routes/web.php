@@ -10,6 +10,7 @@ Route::get('/', function () {
 
 // routes/web.php
 
+
 Route::get('/products/import', [ProductController::class, 'showForm'])->name('products.import'); // blade form
 Route::post('/products/upload', [ProductController::class, 'importCsv'])->name('products.upload'); // form submit
 
