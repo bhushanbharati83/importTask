@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;  // ← ye add karo
+use Illuminate\Support\Str; 
 use App\Models\Upload;
 
 class UploadController extends Controller

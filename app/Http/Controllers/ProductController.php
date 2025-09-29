@@ -56,8 +56,9 @@ class ProductController extends Controller
 
     public function importCsv(Request $req)
     {
+
         $req->validate([
-            'csv' => 'required|mimes:csv,txt|max:51200', // 50MB
+            'csv_file' => 'required|mimes:csv,txt|max:51200', 
         ]);
 
         $handle = fopen($req->file('csv_file')->getRealPath(), 'r');
@@ -67,8 +68,9 @@ class ProductController extends Controller
         $rows = [];
         $summary = ['total' => 0, 'created' => 0, 'updated' => 0, 'invalid' => 0, 'duplicates' => 0];
         $seen = [];
-
+        //  dd('before loop');
         while (($row = fgetcsv($handle)) !== false) {
+            // dd('in loop');
             $summary['total']++;
             $data = array_combine($header, $row);
 
@@ -86,6 +88,7 @@ class ProductController extends Controller
 
             $rows[] = $data;
 
+            //dd($rows);
             // process batch
             if (count($rows) >= $batchSize) {
                 $this->processRows($rows, $summary);
@@ -99,10 +102,11 @@ class ProductController extends Controller
         }
 
         fclose($handle);
-        return $summary;
+        // return $summary;
+        return view('products.summary', compact('summary'));
     }
 
-   protected function processRows(array $rows, array &$summary)
+    protected function processRows(array $rows, array &$summary)
     {
         foreach ($rows as $data) {
             $product = Product::updateOrCreate(

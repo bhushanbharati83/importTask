@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Upload extends Model
 {
-    protected $keyType = 'string';  // uuid primary key
+    protected $keyType = 'string';  
     public $incrementing = false;
 
     protected $fillable = [
